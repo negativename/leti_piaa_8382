@@ -1,0 +1,2 @@
+g++ a_star.cpp && ./a.out
+g++ gr.cpp && ./a.out
