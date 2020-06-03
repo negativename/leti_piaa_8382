@@ -4,7 +4,6 @@
 
 //#define DEBUG 
 
-using namespace std;
 // структура описывающая квадрат 
 struct Square{ 
     int x; 
@@ -27,10 +26,10 @@ int mlt(int N){
 void out(int **arr,int N){ 
     for(int m = 0; m < N; m++){ 
         for(int l = 0; l < N; l++) 
-            cout << arr[m][l]<< ' ';
-        cout << endl; 
+            std::cout << arr[m][l]<< ' ';
+        std::cout << std::endl; 
     } 
-    cout << endl; 
+    std::cout << std::endl; 
 } 
 
 // функция инициализации квадрата в массиве в соответствии с параметрами х, у и length_square 
@@ -41,7 +40,7 @@ void fill_square(int **arr, int x, int y, int length_square){
 } 
 
 // функция копировния стека 
-void stack_copy(stack <Square> * sqrs, stack <Square> * sqrs_copy){ 
+void stack_copy(std::stack <Square> * sqrs, std::stack <Square> * sqrs_copy){ 
     while(!sqrs->empty()){ 
         sqrs_copy->push(sqrs->top()); 
         sqrs->pop(); 
@@ -61,7 +60,7 @@ int empty_cell(int **arr, int &x, int &y, int N){
 } 
 
 // функция опустошения стека 
-void empty_stack(stack <Square> *sqrs){ 
+void empty_stack(std::stack <Square> *sqrs){ 
     while(!sqrs->empty()) 
         sqrs->pop(); 
 } 
@@ -80,7 +79,7 @@ int max_length(int **arr, int &x, int &y, int N){
 } 
 
 // рекурсивная функция для перебора возможных значений расстановки квадратов 
-int min_sqrs(int limit, stack <Square> *sqrs,int **arr, int N, int count_rec){ 
+int min_sqrs(int limit, std::stack <Square> *sqrs,int **arr, int N, int count_rec){ 
     if(limit < count_rec) 
         return -1; 
     #ifdef DEBUG 
@@ -88,18 +87,18 @@ int min_sqrs(int limit, stack <Square> *sqrs,int **arr, int N, int count_rec){
     #endif 
     int x, y; 
     if(empty_cell(arr, x, y, N)){    
-        cout << "Rec number is " << count_rec << endl;
+        std::cout << "Rec number is " << count_rec << std::endl;
         return 0;
     }
-    stack <Square> sqrs_tmp; 
-    stack <Square> sqrs_max; 
+    std::stack <Square> sqrs_tmp; 
+    std::stack <Square> sqrs_max; 
     int max = max_length(arr, x, y, N); 
     int length_square, k_min = limit + 1, k, need_length = 1; 
     for(length_square = 1; length_square <= max; length_square++){ 
         fill_square(arr, x, y, length_square); 
         k = min_sqrs(limit, &sqrs_tmp, arr, N, count_rec+1)+1; 
 #ifdef DEBUG 
-cout << "CURRENT K : " << k << ", K_MIN : " << k_min << endl; 
+std::cout << "CURRENT K : " << k << ", K_MIN : " << k_min << std::endl; 
 out(arr, N);
 #endif 
         if(k < k_min && k != 0){ 
@@ -125,12 +124,12 @@ out(arr, N);
 
 int main(){ 
     int N, min_k;
-    cin  >>  N; 
+    std::cin  >>  N; 
     if(!(N>=2 && N<=40)){ // проверка на корректность данных 
-        cout << "ERROR" << endl; 
+        std::cout << "ERROR" << std::endl; 
         return 0; 
     } 
-    stack <Square> sqrs; 
+    std::stack <Square> sqrs; 
     int mul = mlt(N); 
     int limit = 6.37 * sqrt(sqrt((mul == 1) ? N : mul));
     int **arr; 
@@ -153,12 +152,12 @@ int main(){
         sqrs.push({0, half, half - 1}); 
         sqrs.push({0, 0, half}); 
     } 
-    cout << min_k << endl; 
+    std::cout << min_k << std::endl; 
     Square tmp; 
     int scale = (mul != 1) ? N/mul : 1;
     while(!sqrs.empty()){ 
         tmp  =  sqrs.top(); 
-        cout << tmp.x * scale + 1 << " " << tmp.y*scale +1 << " " << tmp.length*scale << endl; 
+        std::cout << tmp.x * scale + 1 << " " << tmp.y*scale +1 << " " << tmp.length*scale << std::endl; 
         sqrs.pop(); 
     }    
     if(mul!=1) // отчистка массива 
