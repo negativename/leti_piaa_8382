@@ -1,0 +1,2 @@
+g++ lab5_1.cpp && ./a.out
+g++ lab5_2.cpp && ./a.out
